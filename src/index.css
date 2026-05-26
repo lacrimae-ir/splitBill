@@ -1,0 +1,492 @@
+@import url("https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&family=Poppins:wght@400;500;600&display=swap");
+
+:root {
+  /* Cute retro-lavender color tokens */
+  --bg-canvas: rgba(20, 18, 26, 0); /* fully transparent for Electron widget background */
+  --bg-main: #E7DBFF;              /* Soft pastel lavender main screen */
+  --bg-header: #C4A8FF;            /* Slightly darker purple banner */
+  --bg-card: #FFFFFF;              /* Premium white card background */
+  --bg-input: #FAF8FF;             /* Lavender-tinted white for inputs */
+  --color-purple-primary: #8A66D6; /* Deep purple for text/elements */
+  --color-purple-light: #C4A8FF;   /* Soft purple accent */
+  --color-text-white: #FFFFFF;
+  --color-text-dark: #584F6C;
+  --color-danger: #FF7898;
+  
+  --font-pixel: "Pixelify Sans", "Poppins", sans-serif;
+  --font-sans: "Poppins", sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%; /* 1rem = 10px */
+  background-color: transparent !important;
+}
+
+body {
+  height: 100vh;
+  width: 100vw;
+  background-color: transparent !important;
+  color: var(--color-text-dark);
+  font-family: var(--font-sans);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* Scrollbar Customization */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(231, 219, 255, 0.4);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-purple-light);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-purple-primary);
+}
+
+/* Pixel Font Utility */
+.pixel-text {
+  font-family: var(--font-pixel);
+  letter-spacing: 0.5px;
+}
+
+/* Main Box Container - Styled as a Desktop Widget */
+.app-container {
+  width: 380px;
+  height: 460px;
+  background-color: var(--bg-main);
+  border-radius: 20px;
+  border: 4px solid #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+  font-size: 1.4rem;
+  animation: widgetEntrance 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+}
+
+@keyframes widgetEntrance {
+  from {
+    opacity: 0;
+    transform: scale(0.92) translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Header Banner styling */
+.app-header {
+  height: 50px;
+  background-color: var(--bg-header);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  border-bottom: 3px solid #FFFFFF;
+  z-index: 10;
+  -webkit-app-region: drag; /* allows dragging the frameless Electron window! */
+}
+
+.app-title {
+  color: var(--color-text-white);
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+/* Exit Button (White X) */
+.exit-button {
+  background: none;
+  border: none;
+  color: var(--color-text-white);
+  font-size: 2.4rem;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s, opacity 0.2s;
+  padding: 4px;
+  -webkit-app-region: no-drag; /* makes interactive in draggable header */
+}
+
+.exit-button:hover {
+  transform: scale(1.15);
+  opacity: 0.9;
+}
+
+.exit-button:active {
+  transform: scale(0.9);
+}
+
+/* Main Content Area */
+.app-content {
+  flex: 1;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  position: relative;
+}
+
+/* State 1: Empty Card style */
+.empty-state-card {
+  border: 3px solid #FFFFFF;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 14px;
+  padding: 24px 16px;
+  text-align: center;
+  margin-top: auto;
+  margin-bottom: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  animation: cardPulse 3s infinite ease-in-out;
+}
+
+@keyframes cardPulse {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+  100% { transform: translateY(0); }
+}
+
+.empty-state-title {
+  color: var(--color-text-white);
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+/* Retro buttons */
+.btn-retro {
+  background-color: var(--color-purple-light);
+  color: var(--color-text-white);
+  padding: 8px 16px;
+  border: 2px solid #FFFFFF;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 1.4rem;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1);
+  box-shadow: 0 3px 0 var(--color-purple-primary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-retro:hover {
+  background-color: #bfa1fc;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 0 var(--color-purple-primary);
+}
+
+.btn-retro:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 var(--color-purple-primary);
+}
+
+/* State 2: Friend List Layout */
+.friend-list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex-grow: 1;
+}
+
+.friend-item {
+  background-color: var(--bg-card);
+  border: 2px solid #FFFFFF;
+  border-radius: 12px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 4px 10px rgba(138, 102, 214, 0.08);
+  transition: all 0.25s ease;
+}
+
+.friend-item:hover {
+  transform: translateX(4px);
+  box-shadow: 0 6px 15px rgba(138, 102, 214, 0.15);
+}
+
+/* Styled SVG Avatar Icon */
+.friend-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: var(--color-purple-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #FFFFFF;
+  box-shadow: 0 2px 5px rgba(138, 102, 214, 0.2);
+  color: var(--color-text-white);
+  flex-shrink: 0;
+}
+
+.friend-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.friend-name {
+  color: var(--color-purple-primary);
+  font-size: 1.4rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+
+.friend-balance-text {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.friend-balance-text.owes-you {
+  color: #4CAF50;
+}
+
+.friend-balance-text.you-owe {
+  color: var(--color-danger);
+}
+
+.friend-balance-text.settled {
+  color: #B2A7C4;
+}
+
+/* Choose Button ("Pilih") */
+.btn-pilih {
+  padding: 6px 12px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  border-radius: 6px;
+  border: 2px solid var(--color-purple-light);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background-color: var(--bg-card);
+  color: var(--color-purple-primary);
+}
+
+.btn-pilih:hover {
+  background-color: #FAF8FF;
+  border-color: var(--color-purple-primary);
+}
+
+.btn-pilih.selected {
+  background-color: var(--color-purple-light);
+  color: var(--color-text-white);
+  border-color: #FFFFFF;
+  box-shadow: 0 2px 6px rgba(138, 102, 214, 0.3);
+}
+
+/* Delete Friend Button ("x") */
+.btn-delete {
+  background: none;
+  border: none;
+  color: var(--color-danger);
+  font-size: 2.2rem;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s, color 0.2s;
+  margin-left: 8px;
+  line-height: 1;
+}
+
+.btn-delete:hover {
+  transform: scale(1.2);
+  color: #ff4778;
+}
+
+.btn-delete:active {
+  transform: scale(0.9);
+}
+
+/* Floating Action Button for Add Friend (State 2 bottom) */
+.btn-add-floating {
+  margin-top: auto;
+  margin-bottom: 4px;
+  align-self: center;
+}
+
+/* State 3: Modal Add Friend Overlay */
+.modal-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(20, 18, 26, 0.35);
+  backdrop-filter: blur(2px);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  animation: fadeIn 0.25s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal-card {
+  width: 100%;
+  background: var(--bg-card);
+  border: 3px solid #FFFFFF;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 10px 25px rgba(20, 18, 26, 0.15);
+  position: relative;
+  animation: scaleIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Purple Close Button 'x' */
+.purple-close-x {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  background: none;
+  border: none;
+  color: var(--color-purple-light);
+  font-size: 1.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s, transform 0.2s;
+}
+
+.purple-close-x:hover {
+  color: var(--color-purple-primary);
+  transform: scale(1.15);
+}
+
+.purple-close-x:active {
+  transform: scale(0.9);
+}
+
+/* Form Styles */
+.form-title {
+  color: var(--color-purple-primary);
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-bottom: 16px;
+  text-transform: uppercase;
+  padding-right: 20px; /* spacing for X button */
+  line-height: 1.4;
+}
+
+.form-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+  gap: 8px;
+}
+
+.form-label {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--color-purple-primary);
+  white-space: nowrap;
+}
+
+.form-input-wrapper {
+  flex: 1;
+}
+
+.form-input {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1.5px solid var(--color-purple-light);
+  background-color: var(--bg-input);
+  color: var(--color-text-dark);
+  font-family: var(--font-pixel);
+  font-size: 1.3rem;
+  outline: none;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.form-input:focus {
+  border-color: var(--color-purple-primary);
+  box-shadow: 0 0 0 3px rgba(196, 168, 255, 0.25);
+  background-color: #FFFFFF;
+}
+
+.form-input:disabled {
+  background-color: #F1EDFA;
+  border-color: #E2DBF0;
+  color: #B0A6C2;
+}
+
+/* Custom Dropdown/Selector matching inputs */
+.form-select {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1.5px solid var(--color-purple-light);
+  background-color: var(--bg-input);
+  color: var(--color-text-dark);
+  font-family: var(--font-pixel);
+  font-size: 1.3rem;
+  outline: none;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s ease;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.form-select:focus {
+  border-color: var(--color-purple-primary);
+  background-color: #FFFFFF;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 16px;
+}
+
+.btn-form-submit {
+  padding: 6px 16px;
+  font-size: 1.2rem;
+}
