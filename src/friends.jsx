@@ -1,13 +1,13 @@
 const friends = [
     {
         id: 1,
-        name: "Tiara Kesya Azzahra",
+        name: "lele",
         image: "https://i.pravatar.cc/48?u=118836",
         balance : -7,
     },
     {
         id: 2,
-        name: "Bunga Citra Nur Fadilla",
+        name: "ikan koi",
         image: "https://i.pravatar.cc/48?u=118836",
         balance : 20,
     },
